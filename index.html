@@ -38,7 +38,7 @@ button:hover{border-color:#569cd6;background:#333333}
 <section class="editor" aria-label="Animated lyric source">
 <div class="editor-bar">
 <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-<span class="filename">bye.html</span>
+<span class="filename">index.html</span>
 <button id="playBtn" type="button" style="margin-left:auto">Play song</button>
 
 </div>
@@ -85,6 +85,43 @@ const lyrics = [
   [{t:'Courtney just pulled up in the driveway',c:'lyric'}],
   [{t:"It's time (It's time)",c:'lyric'}]
 ];
+
+
+const codeNotes = [
+  [['keyword','const '],['comment',' // important']],
+  [['keyword','let '],['attr','colour']],
+  [['comment','// colour '],['punct',';']],
+  [['keyword','async '],['comment',' // important']],
+  [['attr','value: ']],
+  [['keyword','return '],['comment',' // functions']],
+  [['keyword','const '],['attr','important']],
+  [['keyword','if '],['comment',' // colour']],
+  [['keyword','let '],['comment',' // functions']],
+  [['attr','important: '],['punct',';']],
+  [['keyword','const '],['comment',' // render']],
+  [['keyword','return '],['attr','colour']],
+  [['comment','// important '],['punct',';']],
+  [['keyword','let '],['comment',' // value']],
+  [['attr','colour: '],['keyword','true']],
+  [['keyword','const '],['comment',' // important']],
+  [['attr','value: '],['punct',';']],
+  [['keyword','return '],['comment',' // functions']],
+  [['keyword','if '],['attr','colour']],
+  [['comment','// important '],['keyword','const ']],
+  [['keyword','async '],['comment',' // value']],
+  [['attr','render: '],['punct',';']],
+  [['keyword','let '],['comment',' // important']],
+  [['keyword','return '],['attr','colour']],
+  [['comment','// functions '],['punct',';']],
+  [['keyword','const '],['comment',' // important']],
+  [['attr','value: '],['keyword','true']],
+  [['keyword','return '],['comment',' // colour']]
+];
+lyrics.forEach((line, index) => {
+  const fragments = codeNotes[index] || [];
+  line.unshift(...fragments.filter((_, i) => i % 2 === 0).map(([c, t]) => ({t, c})));
+  line.push(...fragments.filter((_, i) => i % 2 === 1).map(([c, t]) => ({t, c})));
+});
 
 const after = [
 '      <span class="tag">&lt;/div&gt;</span>',
