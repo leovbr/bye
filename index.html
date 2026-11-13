@@ -44,6 +44,7 @@ button:hover{border-color:#569cd6;background:#333333}
 <div class="code-wrap"><div class="code" id="code"></div></div>
 </section>
 </main>
+<audio id="song" preload="metadata" src="assets/ssstik.io_1794580635381.mp3"></audio>
 <div class="toast" id="toast" role="status" aria-live="polite">Lyrics copied</div>
 <script>
 const before = [
@@ -108,21 +109,43 @@ const allLines = [
   ...after.map(code => ({code}))
 ];
 let runToken = 0;
+const song = document.getElementById('song');
+const playBtn = document.getElementById('playBtn');
 
 function plainText(parts) {
   return parts.map(part => part.t).join('');
 }
 
-const BPM = 110;
-const BEAT_MS = 60000 / BPM;
-// Durasi frasa dalam ketukan. Ini grid musikal awal, bukan timestamp vokal presisi.
 const phraseBeats = [
   2, 2, 4, 8, 8, 6, 4, 4, 4, 2, 2, 2, 2, 4,
   2, 4, 2, 4, 6, 8, 4, 6, 4, 4, 4, 4, 2
 ];
+const totalBeats = phraseBeats.reduce((sum, beats) => sum + beats, 0);
 
-function wait(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+function waitFrame() {
+  return new Promise(resolve => requestAnimationFrame(resolve));
+}
+
+async function waitForSongTime(target, token) {
+  while (token === runToken && song.currentTime < target && !song.ended) {
+    await waitFrame();
+  }
+}
+
+function addRow(index, item) {
+  const row = document.createElement('div');
+  row.className = 'line';
+  if (item.lyric) row.classList.add('lyric-line');
+  row.dataset.no = String(index + 1).padStart(2, '0');
+  const src = document.createElement('span');
+  src.className = 'src';
+  const cursor = document.createElement('span');
+  cursor.className = 'cursor';
+  src.appendChild(cursor);
+  row.appendChild(src);
+  code.appendChild(row);
+  row.scrollIntoView({block:'nearest',behavior:'smooth'});
+  return {src, cursor};
 }
 
 async function play() {
@@ -130,52 +153,82 @@ async function play() {
   code.innerHTML = '';
   wrap.scrollTop = 0;
 
-  for (let i = 0; i < allLines.length; i++) {
-    if (token !== runToken) return;
+  // Tampilkan pembuka kode sebelum baris lirik.
+  for (let i = 0; i < before.length + 1; i++) {
     const item = allLines[i];
-    const row = document.createElement('div');
-    row.className = 'line';
-    if (item.lyric) row.classList.add('lyric-line');
-    row.dataset.no = String(i + 1).padStart(2, '0');
-
-    const src = document.createElement('span');
-    src.className = 'src';
-    const cursor = document.createElement('span');
-    cursor.className = 'cursor';
-    src.appendChild(cursor);
-    row.appendChild(src);
-    code.appendChild(row);
-    row.scrollIntoView({block:'nearest',behavior:'smooth'});
-
-    if (item.lyric) {
-      const lyricIndex = allLines.slice(0, i).filter(line => line.lyric).length;
-      const phraseMs = (phraseBeats[lyricIndex] || 4) * BEAT_MS;
-      const chars = item.lyric.reduce((n, part) => n + Array.from(part.t).length, 0);
-      const charMs = Math.max(18, Math.min(58, phraseMs / Math.max(chars, 1)));
-
-      for (const part of item.lyric) {
-        const piece = document.createElement('span');
-        piece.className = part.c;
-        src.insertBefore(piece, cursor);
-        for (const char of Array.from(part.t)) {
-          if (token !== runToken) return;
-          piece.textContent += char;
-          await wait(char === ' ' ? charMs * 0.55 : charMs);
-        }
-      }
-      // Sisa durasi menjaga tiap baris tetap berada di grid 110 BPM.
-      const elapsedEstimate = chars * charMs;
-      await wait(Math.max(0, phraseMs - elapsedEstimate));
-    } else {
-      src.innerHTML = item.code;
-      src.appendChild(cursor);
-      await wait(95);
-    }
-
-    if (token !== runToken) return;
+    const {src, cursor} = addRow(i, item);
+    src.innerHTML = item.code || '<span class="owner-tag">&lt;by leovbriansyh&gt;</span>';
+    await waitFrame();
     cursor.remove();
   }
+
+  const duration = song.duration || 49.66;
+  let beatPosition = 0;
+  for (let lyricIndex = 0; lyricIndex < lyrics.length; lyricIndex++) {
+    if (token !== runToken) return;
+    const item = allLines[before.length + 1 + lyricIndex];
+    const startTime = duration * beatPosition / totalBeats;
+    beatPosition += phraseBeats[lyricIndex] || 4;
+    const endTime = duration * beatPosition / totalBeats;
+    await waitForSongTime(startTime, token);
+    if (token !== runToken) return;
+
+    const {src, cursor} = addRow(before.length + 1 + lyricIndex, item);
+    const chars = [];
+    for (const part of item.lyric) {
+      const piece = document.createElement('span');
+      piece.className = part.c;
+      src.insertBefore(piece, cursor);
+      for (const char of Array.from(part.t)) chars.push({piece, char});
+    }
+
+    for (let c = 0; c < chars.length; c++) {
+      if (token !== runToken) return;
+      const targetTime = startTime + (endTime - startTime) * (c + 1) / chars.length;
+      await waitForSongTime(targetTime, token);
+      chars[c].piece.textContent += chars[c].char;
+    }
+    cursor.remove();
+  }
+
+  // Baris penutup muncul setelah bagian lirik selesai.
+  for (let i = before.length + 1 + lyrics.length; i < allLines.length; i++) {
+    if (token !== runToken) return;
+    const item = allLines[i];
+    const {src, cursor} = addRow(i, item);
+    src.innerHTML = item.code;
+    cursor.remove();
+    await waitFrame();
+  }
 }
+
+playBtn.addEventListener('click', async () => {
+  if (!song.paused) {
+    song.pause();
+    playBtn.textContent = 'Resume';
+    return;
+  }
+  if (song.ended || song.currentTime === 0) {
+    song.currentTime = 0;
+    playBtn.textContent = 'Pause';
+    song.play().then(play).catch(() => {
+      playBtn.textContent = 'Play song';
+    });
+  } else {
+    playBtn.textContent = 'Pause';
+    song.play().catch(() => {});
+  }
+});
+
+song.addEventListener('ended', () => {
+  playBtn.textContent = 'Replay';
+});
+song.addEventListener('pause', () => {
+  if (!song.ended && song.currentTime > 0) playBtn.textContent = 'Resume';
+});
+song.addEventListener('play', () => {
+  playBtn.textContent = 'Pause';
+});
 play();
 </script>
 </body>
