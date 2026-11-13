@@ -62,7 +62,8 @@ const lyrics = [
   [{t:"This ain't the first time I've been hostage to these tears",c:'lyric'}],
   [{t:"I can't believe I'm finally movin' through my fears",c:'lyric'}],
   [{t:"At least I know how hard we tried, both you and me",c:'lyric'}],
-  [{t:"Didn't we? Didn't we?",c:'lyric'}],
+  [{t:"Didn't we?",c:'lyric'}],
+  [{t:"Didn't we?",c:'lyric'}],
   [{t:'So I grab my stuff',c:'lyric'}],
   [{t:'Courtney just pulled up in the driveway',c:'lyric'}],
   [{t:"It's time",c:'lyric'}],
@@ -117,11 +118,21 @@ function plainText(parts) {
   return parts.map(part => part.t).join('');
 }
 
-const phraseBeats = [
-  2, 2, 4, 8, 8, 6, 4, 4, 4, 2, 2, 2, 2, 4,
-  2, 4, 2, 4, 6, 8, 4, 6, 4, 4, 4, 4, 2
-];
-const totalBeats = phraseBeats.reduce((sum, beats) => sum + beats, 0);
+// Durasi dikalibrasi per baris agar vokal punya ruang lebih panjang.
+const lineDuration = (index, item) => {
+  if (index === 0) return 2.8; // Bye-bye
+  if (index === 1) return 3.4; // yeah, boy bye
+  if (index === 2) return 4.8; // it's over...
+  if (index >= 3 && index <= 5) return [5.8, 5.6, 5.6][index - 3];
+  if (index === 6 || index === 7) return 2.8; // Didn't we? x2
+  const length = plainText(item.lyric).length;
+  return Math.max(3.2, Math.min(7.2, length * 0.105));
+};
+const gapAfter = index => {
+  if (index === 2) return 1.8; // jeda sebelum verse
+  if (index === 6 || index === 7) return 0.85; // jeda antar "Didn't we?"
+  return 0;
+};
 
 function waitFrame() {
   return new Promise(resolve => requestAnimationFrame(resolve));
@@ -176,14 +187,14 @@ async function play() {
     cursor.remove();
   }
 
-  const secondsPerBeat = 60 / 100;
-  let beatPosition = 0;
+  let timeline = 0;
   for (let lyricIndex = 0; lyricIndex < lyrics.length; lyricIndex++) {
     if (token !== runToken) return;
     const item = allLines[before.length + 1 + lyricIndex];
-    const startTime = beatPosition * secondsPerBeat;
-    beatPosition += phraseBeats[lyricIndex] || 4;
-    const endTime = beatPosition * secondsPerBeat;
+    const startTime = timeline;
+    const duration = lineDuration(lyricIndex, item);
+    const endTime = startTime + duration;
+    timeline = endTime + gapAfter(lyricIndex);
     await waitForElapsedTime(startTime, token);
     if (token !== runToken) return;
 
