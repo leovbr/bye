@@ -3,33 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0d0d12">
+<meta name="theme-color" content="#0d1117">
 <title>bye — Lyrics</title>
 <style>
-:root{color-scheme:dark;--bg:#0d0d12;--panel:#17171f;--text:#f5f2f7;--muted:#8d8798;--accent:#d6a7ff;--pink:#f2bfd4;--line:rgba(255,255,255,.09)}
+:root{color-scheme:dark;--bg:#0d1117;--panel:#0d1117;--text:#d4d4d4;--muted:#858585;--accent:#569cd6;--line:#252526}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 5%,rgba(145,92,190,.18),transparent 36rem),radial-gradient(ellipse at 90% 35%,rgba(197,117,153,.12),transparent 34rem),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,sans-serif}
-main{width:min(1000px,calc(100% - 32px));margin:auto;padding:clamp(20px,5vw,48px) 0 50px}
-.editor{overflow:hidden;border:1px solid rgba(214,167,255,.18);border-radius:20px;background:rgba(14,14,21,.94);box-shadow:0 28px 90px rgba(0,0,0,.38)}
-.editor-bar{height:48px;display:flex;align-items:center;gap:8px;padding:0 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.025)}
+body{margin:0;min-height:100vh;background:#0d1117;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,sans-serif}
+main{width:100%;margin:0;padding:0 0 50px}
+.editor{overflow:hidden;border:0;border-radius:0;background:#0d1117;box-shadow:none}
+.editor-bar{height:48px;display:flex;align-items:center;gap:8px;padding:0 16px;border-bottom:1px solid #252526;background:#0d1117}
 .dot{width:9px;height:9px;border-radius:50%}.red{background:#ff625c}.yellow{background:#ffbd44}.green{background:#35c96f}
 .filename{margin-left:8px;color:#aaa3b5;font:12px ui-monospace,Consolas,monospace}
 .editor-actions{margin-left:auto;display:flex;gap:8px}
-button{border:1px solid var(--line);background:#22202b;color:#e9e1ef;border-radius:999px;padding:7px 12px;font:inherit;font-size:.72rem;cursor:pointer;transition:.2s}
-button:hover{border-color:rgba(214,167,255,.6);background:#2b2535}
+button{border:1px solid #3c3c3c;background:#252526;color:#d4d4d4;border-radius:3px;padding:7px 12px;font:inherit;font-size:.72rem;cursor:pointer;transition:.2s}
+button:hover{border-color:#569cd6;background:#333333}
 .code-wrap{padding:22px 0 28px;overflow:auto;max-height:72vh}
 .code{min-width:650px;margin:0;color:#d8d2df;font:clamp(12px,1.5vw,14px)/2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 .line{display:grid;grid-template-columns:58px minmax(0,1fr);min-height:28px;padding:0 22px 0 0;white-space:pre}
-.line::before{content:attr(data-no);color:#555064;text-align:right;padding-right:20px;user-select:none}
+.line::before{content:attr(data-no);color:#858585;text-align:right;padding-right:20px;user-select:none}
 .line .src{display:block;min-height:28px}
-.tag{color:#c792ea}.attr{color:#f2bfd4}.value{color:#c3e88d}.punct{color:#8d8798}.lyric{color:#f4edf8}.string{color:#ecc48d}.keyword{color:#82aaff}
-.lyric-line{background:linear-gradient(90deg,rgba(214,167,255,.075),transparent 78%);border-left:2px solid rgba(214,167,255,.5)}
-.cursor{display:inline-block;width:7px;height:1.05em;background:var(--accent);vertical-align:-2px;margin-left:2px;animation:blink .85s steps(2,start) infinite}
+.tag{color:#569cd6}.attr{color:#9cdcfe}.value{color:#ce9178}.punct{color:#d4d4d4}.lyric{color:#d4d4d4}.string{color:#ce9178}.keyword{color:#c586c0}
+.lyric-line{background:transparent;border-left:0}
+.cursor{display:inline-block;width:2px;height:1.15em;background:#aeafad;vertical-align:-2px;margin-left:1px;animation:blink .85s steps(2,start) infinite}
 @keyframes blink{to{visibility:hidden}}
-.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,15px);opacity:0;background:#f4eafa;color:#21172a;padding:9px 15px;border-radius:999px;font-size:.8rem;pointer-events:none;transition:.2s}
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,15px);opacity:0;background:#252526;color:#d4d4d4;padding:9px 15px;border:1px solid #3c3c3c;border-radius:3px;font-size:.8rem;pointer-events:none;transition:.2s}
 .toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:600px){.editor{border-radius:15px}.code-wrap{padding:16px 0 22px}.line{grid-template-columns:42px minmax(0,1fr);padding-right:12px}.line::before{padding-right:12px}main{width:calc(100% - 22px)}}
+@media(max-width:600px){.editor{border-radius:0}.code-wrap{padding:16px 0 22px}.line{grid-template-columns:42px minmax(0,1fr);padding-right:12px}.line::before{padding-right:12px}main{width:100%}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
