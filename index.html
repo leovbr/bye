@@ -113,10 +113,16 @@ function plainText(parts) {
   return parts.map(part => part.t).join('');
 }
 
-function delayFor(item) {
-  if (!item.lyric) return 110;
-  const length = Array.from(plainText(item.lyric)).length;
-  return Math.min(850, 220 + length * 18);
+const BPM = 110;
+const BEAT_MS = 60000 / BPM;
+// Durasi frasa dalam ketukan. Ini grid musikal awal, bukan timestamp vokal presisi.
+const phraseBeats = [
+  2, 2, 4, 8, 8, 6, 4, 4, 4, 2, 2, 2, 2, 4,
+  2, 4, 2, 4, 6, 8, 4, 6, 4, 4, 4, 4, 2
+];
+
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function play() {
@@ -142,6 +148,11 @@ async function play() {
     row.scrollIntoView({block:'nearest',behavior:'smooth'});
 
     if (item.lyric) {
+      const lyricIndex = allLines.slice(0, i).filter(line => line.lyric).length;
+      const phraseMs = (phraseBeats[lyricIndex] || 4) * BEAT_MS;
+      const chars = item.lyric.reduce((n, part) => n + Array.from(part.t).length, 0);
+      const charMs = Math.max(18, Math.min(58, phraseMs / Math.max(chars, 1)));
+
       for (const part of item.lyric) {
         const piece = document.createElement('span');
         piece.className = part.c;
@@ -149,20 +160,22 @@ async function play() {
         for (const char of Array.from(part.t)) {
           if (token !== runToken) return;
           piece.textContent += char;
-          await new Promise(resolve => setTimeout(resolve, char === ' ' ? 18 : 32));
+          await wait(char === ' ' ? charMs * 0.55 : charMs);
         }
       }
+      // Sisa durasi menjaga tiap baris tetap berada di grid 110 BPM.
+      const elapsedEstimate = chars * charMs;
+      await wait(Math.max(0, phraseMs - elapsedEstimate));
     } else {
       src.innerHTML = item.code;
       src.appendChild(cursor);
+      await wait(95);
     }
 
-    await new Promise(resolve => setTimeout(resolve, delayFor(item)));
     if (token !== runToken) return;
     cursor.remove();
   }
 }
-
 play();
 </script>
 </body>
