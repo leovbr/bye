@@ -308,6 +308,13 @@ song.addEventListener('ended', () => {
   // Audio boleh selesai lebih dulu; animasi lirik tetap berjalan.
   if (!lyricsFinished) playBtn.textContent = isPaused ? 'Resume' : 'Pause';
 });
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(error => {
+      console.warn("Service worker registration failed:", error);
+    });
+  });
+}
 </script>
 </body>
 </html>
