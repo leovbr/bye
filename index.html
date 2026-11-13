@@ -66,19 +66,36 @@ const before = [
 ];
 
 const lyrics = [
-'Bye-bye','Boy, bye, hmm','Hmm','Bye-bye','Boy, bye',"It's over, it's over, oh, yeah",
-"This ain't the first time I've been hostage to these tears",
-"I can't believe I'm finally movin' through my fears",
-"At least I know how hard we tried, both you and me",
-"Didn't we? Didn't we?",
-"So I grab my stuff","Courtney just pulled up in the driveway","It's time",
-'Bye-bye','Boy, bye','Bye-bye',"It's over, it's over, oh, yeah",
-'Bye-bye',"I'm takin' what's mine, yeah",'Bye-bye',"It's over, it's over, oh, yeah",
-"You know? I'm stronger than I think",
-"Usually, I'd join you on the floor, but this dance ain't for me",
-"Boy, just turn the music up","Maybe someday, we'll look back with love",
-"Didn't think you'd lose me","Now it's just too late to choose me",
-"So I grab my stuff","Courtney just pulled up in the driveway","It's time (It's time)"
+  [{t:'<bye>',c:'tag'},{t:' boy bye',c:'lyric'}],
+  [{t:'<boy>',c:'tag'},{t:', bye, hmm',c:'lyric'}],
+  [{t:'Hmm',c:'lyric'}],
+  [{t:'<bye>',c:'tag'},{t:' bye',c:'lyric'}],
+  [{t:'Boy, ',c:'lyric'},{t:'<bye>',c:'tag'}],
+  [{t:"{ it's ",c:'punct'},{t:'<over>',c:'tag'},{t:" it's over oh yeah }",c:'lyric'}],
+  [{t:"This ain't the first time I've been hostage to these tears",c:'lyric'}],
+  [{t:"I can't believe I'm finally movin' through my fears",c:'lyric'}],
+  [{t:"At least I know how hard we tried, both you and me",c:'lyric'}],
+  [{t:"Didn't we? Didn't we?",c:'lyric'}],
+  [{t:'So I grab my stuff',c:'lyric'}],
+  [{t:'Courtney just pulled up in the driveway',c:'lyric'}],
+  [{t:"It's time",c:'lyric'}],
+  [{t:'<bye>',c:'tag'},{t:' bye',c:'lyric'}],
+  [{t:'Boy, ',c:'lyric'},{t:'<bye>',c:'tag'}],
+  [{t:'<bye>',c:'tag'},{t:' bye',c:'lyric'}],
+  [{t:"{ it's ",c:'punct'},{t:'<over>',c:'tag'},{t:" it's over oh yeah }",c:'lyric'}],
+  [{t:'<bye>',c:'tag'},{t:' bye',c:'lyric'}],
+  [{t:"I'm takin' what's mine, yeah",c:'lyric'}],
+  [{t:'<bye>',c:'tag'},{t:' bye',c:'lyric'}],
+  [{t:"{ it's ",c:'punct'},{t:'<over>',c:'tag'},{t:" it's over oh yeah }",c:'lyric'}],
+  [{t:"You know? I'm stronger than I think",c:'lyric'}],
+  [{t:"Usually, I'd join you on the floor, but this dance ain't for me",c:'lyric'}],
+  [{t:'Boy, just turn the music up',c:'lyric'}],
+  [{t:"Maybe someday, we'll look back with love",c:'lyric'}],
+  [{t:"Didn't think you'd lose me",c:'lyric'}],
+  [{t:'Now ',c:'lyric'},{t:'<too-late>',c:'tag'},{t:' to choose me',c:'lyric'}],
+  [{t:'So I grab my stuff',c:'lyric'}],
+  [{t:'Courtney just pulled up in the driveway',c:'lyric'}],
+  [{t:"It's time (It's time)",c:'lyric'}]
 ];
 
 const after = [
@@ -111,17 +128,21 @@ const allLines = [
 ];
 let runToken = 0;
 
-function delayFor(line, index) {
-  if (!line.lyric) return 125;
-  const words = line.lyric.trim().split(/\s+/).length;
-  const punctuation = (line.lyric.match(/[,.?!]/g) || []).length;
-  return Math.max(430, Math.min(1450, 250 + words * 105 + punctuation * 90));
+function plainText(parts) {
+  return parts.map(part => part.t).join('');
+}
+
+function delayFor(item) {
+  if (!item.lyric) return 110;
+  const length = Array.from(plainText(item.lyric)).length;
+  return Math.min(850, 220 + length * 18);
 }
 
 async function play() {
   const token = ++runToken;
   code.innerHTML = '';
   wrap.scrollTop = 0;
+
   for (let i = 0; i < allLines.length; i++) {
     if (token !== runToken) return;
     const item = allLines[i];
@@ -129,23 +150,34 @@ async function play() {
     row.className = 'line';
     if (item.lyric) row.classList.add('lyric-line');
     row.dataset.no = String(i + 1).padStart(2, '0');
+
     const src = document.createElement('span');
     src.className = 'src';
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor';
+
     if (item.lyric) {
-      const text = document.createElement('span');
-      text.className = 'lyric';
-      text.textContent = item.lyric;
-      src.appendChild(text);
+      for (const part of item.lyric) {
+        const piece = document.createElement('span');
+        piece.className = part.c;
+        src.appendChild(piece);
+        for (const char of Array.from(part.t)) {
+          if (token !== runToken) return;
+          piece.textContent += char;
+          src.appendChild(cursor);
+          await new Promise(resolve => setTimeout(resolve, char === ' ' ? 18 : 32));
+          cursor.remove();
+        }
+      }
     } else {
       src.innerHTML = item.code;
     }
-    const cursor = document.createElement('span');
-    cursor.className = 'cursor';
+
     src.appendChild(cursor);
     row.appendChild(src);
     code.appendChild(row);
     row.scrollIntoView({block:'nearest',behavior:'smooth'});
-    await new Promise(resolve => setTimeout(resolve, delayFor(item, i)));
+    await new Promise(resolve => setTimeout(resolve, delayFor(item)));
     if (token !== runToken) return;
     cursor.remove();
   }
@@ -156,7 +188,7 @@ play();
 
 document.getElementById('copy').addEventListener('click', async () => {
   try {
-    await navigator.clipboard.writeText('bye — Lyrics\n\n' + lyrics.join('\n'));
+    await navigator.clipboard.writeText('bye — Lyrics\n\n' + lyrics.map(plainText).join('\n'));
     toast.textContent = 'Lyrics copied to clipboard';
   } catch {
     toast.textContent = 'Clipboard unavailable in this browser';
