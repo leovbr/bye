@@ -24,7 +24,6 @@ button:hover{border-color:#569cd6;background:#333333}
 .line::before{content:attr(data-no);color:#858585;text-align:right;padding-right:20px;user-select:none}
 .line .src{display:block;min-height:28px}
 .tag{color:#569cd6}.owner-tag{color:#00bfff}.attr{color:#9cdcfe}.value{color:#ce9178}.punct{color:#d4d4d4}.lyric{color:#d4d4d4}.string{color:#ce9178}.keyword{color:#c586c0}
-.syntax-0{color:#9cdcfe}.syntax-1{color:#c586c0}.syntax-2{color:#ce9178}.syntax-3{color:#b5cea8}.syntax-4{color:#dcdcaa}
 .lyric-line{background:transparent;border-left:0}
 .cursor{display:inline-block;width:2px;height:1.15em;background:#aeafad;vertical-align:-2px;margin-left:1px;animation:blink .85s steps(2,start) infinite}
 @keyframes blink{to{visibility:hidden}}
@@ -60,28 +59,28 @@ const lyrics = [
   [{t:'Bye-bye',c:'lyric'}],
   [{t:'yeah, ',c:'lyric'},{t:'boy bye,',c:'lyric'}],
   [{t:"it's ",c:'lyric'},{t:'<over>',c:'tag'},{t:", it's over, oh yeah",c:'lyric'}],
-  [{t:"This ain't the first time I've been hostage to these tears",c:'lyric'}],
-  [{t:"I can't believe I'm finally movin' through my fears",c:'lyric'}],
-  [{t:"At least I know how hard we tried, both you and me",c:'lyric'}],
-  [{t:"Didn't we?",c:'lyric'}],
+  [{t:"This ain't the first time I've been hostage to these ",c:'lyric'},{t:"tears",c:'value'}],
+  [{t:"I can't believe I'm finally movin' through my ",c:'lyric'},{t:"fears",c:'attr'}],
+  [{t:"At least I know how hard we ",c:'lyric'},{t:"tried",c:'keyword'},{t:", both ",c:'lyric'},{t:"you and me",c:'string'}],
+  [{t:"Didn't ",c:'lyric'},{t:"we?",c:'keyword'}],
   [{t:"Didn't we?",c:'lyric'}],
   [{t:'So I grab my stuff',c:'lyric'}],
   [{t:'Courtney just pulled up in the driveway',c:'lyric'}],
-  [{t:"It's time",c:'lyric'}],
+  [{t:"It's ",c:'lyric'},{t:"time",c:'attr'}],
   [{t:'<bye>',c:'tag'},{t:' bye',c:'lyric'}],
   [{t:'Boy, ',c:'lyric'},{t:'<bye>',c:'tag'}],
   [{t:'<bye>',c:'tag'},{t:' bye',c:'lyric'}],
   [{t:"{ it's ",c:'punct'},{t:'<over>',c:'tag'},{t:" it's over oh yeah }",c:'lyric'}],
   [{t:'<bye>',c:'tag'},{t:' bye',c:'lyric'}],
-  [{t:"I'm takin' what's mine, yeah",c:'lyric'}],
+  [{t:"I'm takin' what's ",c:'lyric'},{t:"mine",c:'value'},{t:", yeah",c:'lyric'}],
   [{t:'<bye>',c:'tag'},{t:' bye',c:'lyric'}],
   [{t:"{ it's ",c:'punct'},{t:'<over>',c:'tag'},{t:" it's over oh yeah }",c:'lyric'}],
-  [{t:"You know? I'm stronger than I think",c:'lyric'}],
+  [{t:"You know? I'm ",c:'lyric'},{t:"stronger",c:'keyword'},{t:" than I think",c:'lyric'}],
   [{t:"Usually, I'd join you on the floor, but this dance ain't for me",c:'lyric'}],
   [{t:'Boy, just turn the music up',c:'lyric'}],
   [{t:"Maybe someday, we'll look back with love",c:'lyric'}],
   [{t:"Didn't think you'd lose me",c:'lyric'}],
-  [{t:'Now ',c:'lyric'},{t:'<too-late>',c:'tag'},{t:' to choose me',c:'lyric'}],
+  [{t:'Now ',c:'lyric'},{t:'<too-late>',c:'tag'},{t:' to ',c:'lyric'},{t:'choose me',c:'string'}],
   [{t:'So I grab my stuff',c:'lyric'}],
   [{t:'Courtney just pulled up in the driveway',c:'lyric'}],
   [{t:"It's time (It's time)",c:'lyric'}]
@@ -201,23 +200,11 @@ async function play() {
 
     const {src, cursor} = addRow(before.length + 1 + lyricIndex, item);
     const chars = [];
-    let wordColor = 0;
     for (const part of item.lyric) {
-      if (part.c !== 'lyric') {
-        const piece = document.createElement('span');
-        piece.className = part.c;
-        src.insertBefore(piece, cursor);
-        for (const char of Array.from(part.t)) chars.push({piece, char});
-        continue;
-      }
-      const tokens = part.t.match(/[A-Za-z0-9']+|[^A-Za-z0-9']+/g) || [];
-      for (const tokenText of tokens) {
-        const piece = document.createElement('span');
-        const isWord = /^[A-Za-z0-9']+$/.test(tokenText);
-        piece.className = isWord ? `syntax-${wordColor++ % 5}` : 'lyric';
-        src.insertBefore(piece, cursor);
-        for (const char of Array.from(tokenText)) chars.push({piece, char});
-      }
+      const piece = document.createElement('span');
+      piece.className = part.c;
+      src.insertBefore(piece, cursor);
+      for (const char of Array.from(part.t)) chars.push({piece, char});
     }
 
     for (let c = 0; c < chars.length; c++) {
