@@ -123,14 +123,14 @@ const lineDuration = (index, item) => {
   if (index === 0) return 2.0; // Bye-bye — dipercepat
   if (index === 1) return 2.2; // yeah, boy bye — dipercepat
   if (index === 2) return 2.7; // it's over... — dipercepat lagi
-  if (index >= 3 && index <= 5) return [4.3, 4.1, 4.1][index - 3];
-  if (index === 6 || index === 7) return 2.8; // Didn't we? x2
+  if (index >= 3 && index <= 5) return [3.7, 4.1, 4.1][index - 3];
+  if (index === 6 || index === 7) return 2.2; // Didn't we? x2 — dipercepat
   const length = plainText(item.lyric).length;
   return Math.max(3.2, Math.min(7.2, length * 0.105));
 };
 const gapAfter = index => {
   // tanpa jeda setelah baris 'it's over'
-  if (index === 6 || index === 7) return 0.85; // jeda antar "Didn't we?"
+  if (index === 6 || index === 7) return 0.4; // jeda singkat antar "Didn't we?"
   return 0;
 };
 
