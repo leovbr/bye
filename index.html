@@ -10,14 +10,7 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 5%,rgba(145,92,190,.18),transparent 36rem),radial-gradient(ellipse at 90% 35%,rgba(197,117,153,.12),transparent 34rem),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,sans-serif}
-.topbar{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,72px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5;background:rgba(13,13,18,.82);backdrop-filter:blur(14px)}
-.brand{font-size:.82rem;font-weight:800;letter-spacing:.2em;color:var(--text);text-decoration:none}
-.top-link{font-size:.78rem;letter-spacing:.12em;color:var(--muted);text-decoration:none}
-main{width:min(1000px,calc(100% - 32px));margin:auto;padding:clamp(42px,8vw,82px) 0 70px}
-.hero{text-align:center;margin-bottom:38px}
-.eyebrow{color:var(--accent);font-size:.68rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase}
-h1{font-size:clamp(4.5rem,14vw,8rem);line-height:.9;letter-spacing:-.09em;margin:16px 0;font-weight:850}
-.subtitle{color:var(--muted);font-size:.92rem}
+main{width:min(1000px,calc(100% - 32px));margin:auto;padding:clamp(20px,5vw,48px) 0 50px}
 .editor{overflow:hidden;border:1px solid rgba(214,167,255,.18);border-radius:20px;background:rgba(14,14,21,.94);box-shadow:0 28px 90px rgba(0,0,0,.38)}
 .editor-bar{height:48px;display:flex;align-items:center;gap:8px;padding:0 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.025)}
 .dot{width:9px;height:9px;border-radius:50%}.red{background:#ff625c}.yellow{background:#ffbd44}.green{background:#35c96f}
@@ -34,24 +27,14 @@ button:hover{border-color:rgba(214,167,255,.6);background:#2b2535}
 .lyric-line{background:linear-gradient(90deg,rgba(214,167,255,.075),transparent 78%);border-left:2px solid rgba(214,167,255,.5)}
 .cursor{display:inline-block;width:7px;height:1.05em;background:var(--accent);vertical-align:-2px;margin-left:2px;animation:blink .85s steps(2,start) infinite}
 @keyframes blink{to{visibility:hidden}}
-.footer{text-align:center;color:#777183;font-size:.75rem;padding:28px 12px 0}
 .toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,15px);opacity:0;background:#f4eafa;color:#21172a;padding:9px 15px;border-radius:999px;font-size:.8rem;pointer-events:none;transition:.2s}
 .toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:600px){.topbar{height:60px}.editor{border-radius:15px}.code-wrap{padding:16px 0 22px}.line{grid-template-columns:42px minmax(0,1fr);padding-right:12px}.line::before{padding-right:12px}main{width:calc(100% - 22px)}}
+@media(max-width:600px){.editor{border-radius:15px}.code-wrap{padding:16px 0 22px}.line{grid-template-columns:42px minmax(0,1fr);padding-right:12px}.line::before{padding-right:12px}main{width:calc(100% - 22px)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
-<header class="topbar">
-<a class="brand" href="#">AFTERHOURS</a>
-<a class="top-link" href="#lyrics">LYRICS ↘</a>
-</header>
 <main id="lyrics">
-<section class="hero">
-<div class="eyebrow">The lyrics experience</div>
-<h1>bye.</h1>
-<div class="subtitle">A song about letting go · Lyrics</div>
-</section>
 <section class="editor" aria-label="Animated lyric source">
 <div class="editor-bar">
 <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
@@ -63,7 +46,6 @@ button:hover{border-color:rgba(214,167,255,.6);background:#2b2535}
 </div>
 <div class="code-wrap"><div class="code" id="code"></div></div>
 </section>
-<div class="footer">Made for the moments when you need to turn the page.</div>
 </main>
 <div class="toast" id="toast" role="status" aria-live="polite">Lyrics copied</div>
 <script>
@@ -72,17 +54,15 @@ const before = [
 '<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span>',
 '  <span class="tag">&lt;head&gt;</span>',
 '    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"utf-8"</span><span class="tag">&gt;</span>',
-'    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1"</span><span class="tag">&gt;</span>',
 '    <span class="tag">&lt;title&gt;</span><span class="lyric">bye</span><span class="tag">&lt;/title&gt;</span>',
 '    <span class="tag">&lt;style&gt;</span>',
-'      <span class="punct">:</span><span class="keyword">root</span> <span class="punct">{</span> <span class="attr">--night</span><span class="punct">:</span> <span class="value">#0d0d12</span><span class="punct">;</span> <span class="attr">--dream</span><span class="punct">:</span> <span class="value">#d6a7ff</span><span class="punct">;</span> <span class="punct">}</span>',
-'      <span class="keyword">body</span> <span class="punct">{</span> <span class="attr">margin</span><span class="punct">:</span> <span class="value">0</span><span class="punct">;</span> <span class="attr">background</span><span class="punct">:</span> <span class="value">var(--night)</span><span class="punct">;</span> <span class="punct">}</span>',
-'      <span class="keyword">.lyrics</span> <span class="punct">{</span> <span class="attr">white-space</span><span class="punct">:</span> <span class="value">pre-line</span><span class="punct">;</span> <span class="attr">color</span><span class="punct">:</span> <span class="value">#f5f2f7</span><span class="punct">;</span> <span class="punct">}</span>',
-'      <span class="keyword">.goodbye</span> <span class="punct">{</span> <span class="attr">opacity</span><span class="punct">:</span> <span class="value">1</span><span class="punct">;</span> <span class="attr">transition</span><span class="punct">:</span> <span class="value">all .4s ease</span><span class="punct">;</span> <span class="punct">}</span>',
+'      <span class="keyword">.lyrics</span> <span class="punct">{</span> <span class="attr">color</span><span class="punct">:</span> <span class="value">#f5f2f7</span><span class="punct">;</span> <span class="punct">}</span>',
+'      <span class="keyword">.goodbye</span> <span class="punct">{</span> <span class="attr">opacity</span><span class="punct">:</span> <span class="value">1</span><span class="punct">;</span> <span class="punct">}</span>',
 '    <span class="tag">&lt;/style&gt;</span>',
 '  <span class="tag">&lt;/head&gt;</span>',
 '  <span class="tag">&lt;body&gt;</span>',
-'    <span class="tag">&lt;main</span> <span class="attr">class</span>=<span class="value">"lyrics"</span><span class="tag">&gt;</span>'
+'    <span class="tag">&lt;main</span> <span class="attr">class</span>=<span class="value">"lyrics"</span><span class="tag">&gt;</span>',
+'      <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"song"</span><span class="tag">&gt;</span>'
 ];
 
 const lyrics = [
@@ -102,7 +82,7 @@ const lyrics = [
 ];
 
 const after = [
-'    <span class="tag">&lt;/main&gt;</span>',
+'      <span class="tag">&lt;/div&gt;</span>',\n'    <span class="tag">&lt;/main&gt;</span>',
 '    <span class="tag">&lt;script&gt;</span>',
 '      <span class="keyword">const</span> <span class="attr">goodbye</span> <span class="punct">=</span> <span class="string">"let go, let go"</span><span class="punct">;</span>',
 '      <span class="keyword">const</span> <span class="attr">tears</span> <span class="punct">=</span> <span class="string">"a little less every day"</span><span class="punct">;</span>',
@@ -119,7 +99,15 @@ const code = document.getElementById('code');
 const wrap = document.querySelector('.code-wrap');
 const replayButton = document.getElementById('replay');
 const toast = document.getElementById('toast');
-const allLines = [...before.map(code => ({code})), ...lyrics.map(lyric => ({lyric})), ...after.map(code => ({code}))];
+const allLines = [
+  ...before.map(code => ({code})),
+  ...lyrics.flatMap(lyric => [
+    {code:'        <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"line"</span><span class="tag">&gt;</span>'},
+    {lyric},
+    {code:'        <span class="tag">&lt;/p&gt;</span>'}
+  ]),
+  ...after.map(code => ({code}))
+];
 let runToken = 0;
 
 function delayFor(line, index) {
