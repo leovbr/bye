@@ -1,23 +1,23 @@
 {
-  "id": "./",
+  "id": "/bye/",
   "name": "bye — Lyrics",
   "short_name": "bye",
   "description": "A little lyrics experience for bye.",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/bye/?source=pwa",
+  "scope": "/bye/",
   "display": "standalone",
   "orientation": "landscape",
   "background_color": "#0d1117",
   "theme_color": "#0d1117",
   "icons": [
     {
-      "src": "./assets/icon-192.svg",
+      "src": "/bye/assets/icon-192.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "./assets/icon-512.svg",
+      "src": "/bye/assets/icon-512.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
