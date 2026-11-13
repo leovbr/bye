@@ -39,10 +39,7 @@ button:hover{border-color:#569cd6;background:#333333}
 <div class="editor-bar">
 <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
 <span class="filename">bye.html</span>
-<div class="editor-actions">
-<button id="replay" type="button">Replay</button>
-<button id="copy" type="button">Copy lyrics</button>
-</div>
+
 </div>
 <div class="code-wrap"><div class="code" id="code"></div></div>
 </section>
@@ -52,17 +49,8 @@ button:hover{border-color:#569cd6;background:#333333}
 const before = [
 '<span class="tag">&lt;!doctype html&gt;</span>',
 '<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span>',
-'  <span class="tag">&lt;head&gt;</span>',
-'    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"utf-8"</span><span class="tag">&gt;</span>',
-'    <span class="tag">&lt;title&gt;</span><span class="lyric">bye</span><span class="tag">&lt;/title&gt;</span>',
-'    <span class="tag">&lt;style&gt;</span>',
-'      <span class="keyword">.lyrics</span> <span class="punct">{</span> <span class="attr">color</span><span class="punct">:</span> <span class="value">#f5f2f7</span><span class="punct">;</span> <span class="punct">}</span>',
-'      <span class="keyword">.goodbye</span> <span class="punct">{</span> <span class="attr">opacity</span><span class="punct">:</span> <span class="value">1</span><span class="punct">;</span> <span class="punct">}</span>',
-'    <span class="tag">&lt;/style&gt;</span>',
-'  <span class="tag">&lt;/head&gt;</span>',
-'  <span class="tag">&lt;body&gt;</span>',
-'    <span class="tag">&lt;main</span> <span class="attr">class</span>=<span class="value">"lyrics"</span><span class="tag">&gt;</span>',
-'      <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"song"</span><span class="tag">&gt;</span>'
+'<span class="tag">&lt;head&gt;</span>',
+'<span class="tag">&lt;style&gt;</span>'
 ];
 
 const lyrics = [
@@ -115,7 +103,6 @@ const after = [
 
 const code = document.getElementById('code');
 const wrap = document.querySelector('.code-wrap');
-const replayButton = document.getElementById('replay');
 const toast = document.getElementById('toast');
 const allLines = [
   ...before.map(code => ({code})),
@@ -179,19 +166,7 @@ async function play() {
   }
 }
 
-replayButton.addEventListener('click', play);
 play();
-
-document.getElementById('copy').addEventListener('click', async () => {
-  try {
-    await navigator.clipboard.writeText('bye — Lyrics\n\n' + lyrics.map(plainText).join('\n'));
-    toast.textContent = 'Lyrics copied to clipboard';
-  } catch {
-    toast.textContent = 'Clipboard unavailable in this browser';
-  }
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2200);
-});
 </script>
 </body>
 </html>
