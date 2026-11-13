@@ -1,182 +1,180 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0d0d12">
-  <title>bye — Lyrics</title>
-  <style>
-    :root{color-scheme:dark;--bg:#0d0d12;--panel:#17171f;--text:#f5f2f7;--muted:#8d8798;--accent:#d6a7ff;--pink:#f2bfd4;--line:rgba(255,255,255,.09)}
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 5%,rgba(145,92,190,.18),transparent 36rem),radial-gradient(ellipse at 90% 35%,rgba(197,117,153,.12),transparent 34rem),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-    .topbar{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,72px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5;background:rgba(13,13,18,.82);backdrop-filter:blur(14px)}
-    .brand{font-size:.82rem;font-weight:800;letter-spacing:.2em;color:var(--text);text-decoration:none}
-    .top-link{font-size:.78rem;letter-spacing:.12em;color:var(--muted);text-decoration:none}
-    main{width:min(1000px,calc(100% - 32px));margin:auto;padding:clamp(42px,8vw,82px) 0 70px}
-    .hero{text-align:center;margin-bottom:38px}
-    .eyebrow{color:var(--accent);font-size:.68rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase}
-    h1{font-size:clamp(4.5rem,14vw,8rem);line-height:.9;letter-spacing:-.09em;margin:16px 0;font-weight:850}
-    .subtitle{color:var(--muted);font-size:.92rem}
-    .editor{overflow:hidden;border:1px solid rgba(214,167,255,.18);border-radius:20px;background:rgba(14,14,21,.94);box-shadow:0 28px 90px rgba(0,0,0,.38)}
-    .editor-bar{height:48px;display:flex;align-items:center;gap:8px;padding:0 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.025)}
-    .dot{width:9px;height:9px;border-radius:50%}.dot:nth-child(1){background:#ff625c}.dot:nth-child(2){background:#ffbd44}.dot:nth-child(3){background:#35c96f}
-    .filename{margin-left:8px;color:#aaa3b5;font:12px ui-monospace,SFMono-Regular,Consolas,monospace}
-    .editor-actions{margin-left:auto;display:flex;gap:8px}
-    button{border:1px solid var(--line);background:#22202b;color:#e9e1ef;border-radius:999px;padding:7px 12px;font:inherit;font-size:.72rem;cursor:pointer;transition:.2s}
-    button:hover{border-color:rgba(214,167,255,.6);background:#2b2535}
-    .code-wrap{padding:22px 0 28px;overflow-x:auto}
-    .code{min-width:650px;margin:0;color:#d8d2df;font:clamp(12px,1.5vw,14px)/2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-    .line{display:grid;grid-template-columns:58px minmax(0,1fr);min-height:28px;padding:0 22px 0 0;white-space:pre}
-    .line::before{content:attr(data-no);color:#555064;text-align:right;padding-right:20px;user-select:none}
-    .line .src{display:block;min-height:28px}
-    .tag{color:#c792ea}.attr{color:#f2bfd4}.value{color:#c3e88d}.punct{color:#8d8798}.lyric{color:#f4edf8}.string{color:#ecc48d}.keyword{color:#82aaff}.muted-code{color:#666174}
-    .line.lyric-line{background:linear-gradient(90deg,rgba(214,167,255,.075),transparent 78%);border-left:2px solid rgba(214,167,255,.5)}
-    .line.lyric-line::before{padding-right:18px}
-    .cursor{display:inline-block;width:7px;height:1.05em;background:var(--accent);vertical-align:-2px;margin-left:2px;animation:blink .85s steps(2,start) infinite}
-    @keyframes blink{to{visibility:hidden}}
-    .line.pending{visibility:hidden}
-    .line.typing .src{overflow:hidden}
-    .footer{text-align:center;color:#777183;font-size:.75rem;padding:28px 12px 0}
-    .toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,15px);opacity:0;background:#f4eafa;color:#21172a;padding:9px 15px;border-radius:999px;font-size:.8rem;pointer-events:none;transition:.2s}
-    .toast.show{opacity:1;transform:translate(-50%,0)}
-    @media(max-width:600px){.topbar{height:60px}.editor{border-radius:15px}.code-wrap{padding:16px 0 22px}.line{grid-template-columns:42px minmax(0,1fr);padding-right:12px}.line::before{padding-right:12px}main{width:calc(100% - 22px)}}
-    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;scroll-behavior:auto!important}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0d0d12">
+<title>bye — Lyrics</title>
+<style>
+:root{color-scheme:dark;--bg:#0d0d12;--panel:#17171f;--text:#f5f2f7;--muted:#8d8798;--accent:#d6a7ff;--pink:#f2bfd4;--line:rgba(255,255,255,.09)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 5%,rgba(145,92,190,.18),transparent 36rem),radial-gradient(ellipse at 90% 35%,rgba(197,117,153,.12),transparent 34rem),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,sans-serif}
+.topbar{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,72px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5;background:rgba(13,13,18,.82);backdrop-filter:blur(14px)}
+.brand{font-size:.82rem;font-weight:800;letter-spacing:.2em;color:var(--text);text-decoration:none}
+.top-link{font-size:.78rem;letter-spacing:.12em;color:var(--muted);text-decoration:none}
+main{width:min(1000px,calc(100% - 32px));margin:auto;padding:clamp(42px,8vw,82px) 0 70px}
+.hero{text-align:center;margin-bottom:38px}
+.eyebrow{color:var(--accent);font-size:.68rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase}
+h1{font-size:clamp(4.5rem,14vw,8rem);line-height:.9;letter-spacing:-.09em;margin:16px 0;font-weight:850}
+.subtitle{color:var(--muted);font-size:.92rem}
+.editor{overflow:hidden;border:1px solid rgba(214,167,255,.18);border-radius:20px;background:rgba(14,14,21,.94);box-shadow:0 28px 90px rgba(0,0,0,.38)}
+.editor-bar{height:48px;display:flex;align-items:center;gap:8px;padding:0 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.025)}
+.dot{width:9px;height:9px;border-radius:50%}.red{background:#ff625c}.yellow{background:#ffbd44}.green{background:#35c96f}
+.filename{margin-left:8px;color:#aaa3b5;font:12px ui-monospace,Consolas,monospace}
+.editor-actions{margin-left:auto;display:flex;gap:8px}
+button{border:1px solid var(--line);background:#22202b;color:#e9e1ef;border-radius:999px;padding:7px 12px;font:inherit;font-size:.72rem;cursor:pointer;transition:.2s}
+button:hover{border-color:rgba(214,167,255,.6);background:#2b2535}
+.code-wrap{padding:22px 0 28px;overflow:auto;max-height:72vh}
+.code{min-width:650px;margin:0;color:#d8d2df;font:clamp(12px,1.5vw,14px)/2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.line{display:grid;grid-template-columns:58px minmax(0,1fr);min-height:28px;padding:0 22px 0 0;white-space:pre}
+.line::before{content:attr(data-no);color:#555064;text-align:right;padding-right:20px;user-select:none}
+.line .src{display:block;min-height:28px}
+.tag{color:#c792ea}.attr{color:#f2bfd4}.value{color:#c3e88d}.punct{color:#8d8798}.lyric{color:#f4edf8}.string{color:#ecc48d}.keyword{color:#82aaff}
+.lyric-line{background:linear-gradient(90deg,rgba(214,167,255,.075),transparent 78%);border-left:2px solid rgba(214,167,255,.5)}
+.cursor{display:inline-block;width:7px;height:1.05em;background:var(--accent);vertical-align:-2px;margin-left:2px;animation:blink .85s steps(2,start) infinite}
+@keyframes blink{to{visibility:hidden}}
+.footer{text-align:center;color:#777183;font-size:.75rem;padding:28px 12px 0}
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,15px);opacity:0;background:#f4eafa;color:#21172a;padding:9px 15px;border-radius:999px;font-size:.8rem;pointer-events:none;transition:.2s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:600px){.topbar{height:60px}.editor{border-radius:15px}.code-wrap{padding:16px 0 22px}.line{grid-template-columns:42px minmax(0,1fr);padding-right:12px}.line::before{padding-right:12px}main{width:calc(100% - 22px)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="#">AFTERHOURS</a>
-    <a class="top-link" href="#lyrics">LYRICS ↘</a>
-  </header>
-  <main id="lyrics">
-    <section class="hero">
-      <div class="eyebrow">The lyrics experience</div>
-      <h1>bye.</h1>
-      <div class="subtitle">A song about letting go · Lyrics</div>
-    </section>
-    <section class="editor" aria-label="Animated lyric source">
-      <div class="editor-bar">
-        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-        <span class="filename">bye.html</span>
-        <div class="editor-actions">
-          <button id="replay" type="button">Replay</button>
-          <button id="copy" type="button">Copy lyrics</button>
-        </div>
-      </div>
-      <div class="code-wrap"><div class="code" id="code" aria-live="off"></div></div>
-    </section>
-    <div class="footer">Made for the moments when you need to turn the page.</div>
-  </main>
-  <div class="toast" id="toast" role="status" aria-live="polite">Lyrics copied</div>
-  <script>
-    const source = [
-      {code:'<span class="tag">&lt;!doctype html&gt;</span>'},
-      {code:'<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span>'},
-      {code:'  <span class="tag">&lt;head&gt;</span>'},
-      {code:'    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"utf-8"</span><span class="tag">&gt;</span>'},
-      {code:'    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1"</span><span class="tag">&gt;</span>'},
-      {code:'    <span class="tag">&lt;title&gt;</span><span class="lyric">bye</span><span class="tag">&lt;/title&gt;</span>'},
-      {code:'    <span class="tag">&lt;style&gt;</span>'},
-      {code:'      <span class="punct">:</span><span class="keyword">root</span> <span class="punct">{</span> <span class="attr">--night</span><span class="punct">:</span> <span class="value">#0d0d12</span><span class="punct">;</span> <span class="attr">--dream</span><span class="punct">:</span> <span class="value">#d6a7ff</span><span class="punct">;</span> <span class="punct">}</span>'},
-      {code:'      <span class="keyword">body</span> <span class="punct">{</span> <span class="attr">margin</span><span class="punct">:</span> <span class="value">0</span><span class="punct">;</span> <span class="attr">background</span><span class="punct">:</span> <span class="value">var(--night)</span><span class="punct">;</span> <span class="punct">}</span>'},
-      {code:'      <span class="keyword">.lyrics</span> <span class="punct">{</span> <span class="attr">white-space</span><span class="punct">:</span> <span class="value">pre-line</span><span class="punct">;</span> <span class="attr">color</span><span class="punct">:</span> <span class="value">#f5f2f7</span><span class="punct">;</span> <span class="punct">}</span>'},
-      {code:'    <span class="tag">&lt;/style&gt;</span>'},
-      {code:'  <span class="tag">&lt;/head&gt;</span>'},
-      {code:'  <span class="tag">&lt;body&gt;</span>'},
-      {code:'    <span class="tag">&lt;main</span> <span class="attr">class</span>=<span class="value">"lyrics"</span><span class="tag">&gt;</span>'},
-      {lyric:'Bye-bye'},
-      {lyric:'Boy, bye, hmm'},
-      {lyric:'Hmm'},
-      {lyric:'Bye-bye'},
-      {lyric:'Boy, bye'},
-      {lyric:"It's over, it's over, oh, yeah"},
-      {code:'    <span class="tag">&lt;/main&gt;</span>'},
-      {code:'    <span class="tag">&lt;script&gt;</span>'},
-      {code:'      <span class="keyword">const</span> <span class="attr">goodbye</span> <span class="punct">=</span> <span class="string">"let go, let go"</span><span class="punct">;</span>'},
-      {code:'      <span class="keyword">const</span> <span class="attr">tears</span> <span class="punct">=</span> <span class="string">"This ain't the first time I've been hostage to these tears"</span><span class="punct">;</span>'},
-      {code:'      <span class="keyword">function</span> <span class="attr">moveOn</span><span class="punct">()</span> <span class="punct">{</span> <span class="keyword">return</span> <span class="value">true</span><span class="punct">;</span> <span class="punct">}</span>'},
-      {code:'    <span class="tag">&lt;/script&gt;</span>'},
-      {code:'  <span class="tag">&lt;/body&gt;</span>'},
-      {code:'<span class="tag">&lt;/html&gt;</span>'}
-    ];
+<header class="topbar">
+<a class="brand" href="#">AFTERHOURS</a>
+<a class="top-link" href="#lyrics">LYRICS ↘</a>
+</header>
+<main id="lyrics">
+<section class="hero">
+<div class="eyebrow">The lyrics experience</div>
+<h1>bye.</h1>
+<div class="subtitle">A song about letting go · Lyrics</div>
+</section>
+<section class="editor" aria-label="Animated lyric source">
+<div class="editor-bar">
+<span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+<span class="filename">bye.html</span>
+<div class="editor-actions">
+<button id="replay" type="button">Replay</button>
+<button id="copy" type="button">Copy lyrics</button>
+</div>
+</div>
+<div class="code-wrap"><div class="code" id="code"></div></div>
+</section>
+<div class="footer">Made for the moments when you need to turn the page.</div>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite">Lyrics copied</div>
+<script>
+const before = [
+'<span class="tag">&lt;!doctype html&gt;</span>',
+'<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span>',
+'  <span class="tag">&lt;head&gt;</span>',
+'    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"utf-8"</span><span class="tag">&gt;</span>',
+'    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1"</span><span class="tag">&gt;</span>',
+'    <span class="tag">&lt;title&gt;</span><span class="lyric">bye</span><span class="tag">&lt;/title&gt;</span>',
+'    <span class="tag">&lt;style&gt;</span>',
+'      <span class="punct">:</span><span class="keyword">root</span> <span class="punct">{</span> <span class="attr">--night</span><span class="punct">:</span> <span class="value">#0d0d12</span><span class="punct">;</span> <span class="attr">--dream</span><span class="punct">:</span> <span class="value">#d6a7ff</span><span class="punct">;</span> <span class="punct">}</span>',
+'      <span class="keyword">body</span> <span class="punct">{</span> <span class="attr">margin</span><span class="punct">:</span> <span class="value">0</span><span class="punct">;</span> <span class="attr">background</span><span class="punct">:</span> <span class="value">var(--night)</span><span class="punct">;</span> <span class="punct">}</span>',
+'      <span class="keyword">.lyrics</span> <span class="punct">{</span> <span class="attr">white-space</span><span class="punct">:</span> <span class="value">pre-line</span><span class="punct">;</span> <span class="attr">color</span><span class="punct">:</span> <span class="value">#f5f2f7</span><span class="punct">;</span> <span class="punct">}</span>',
+'      <span class="keyword">.goodbye</span> <span class="punct">{</span> <span class="attr">opacity</span><span class="punct">:</span> <span class="value">1</span><span class="punct">;</span> <span class="attr">transition</span><span class="punct">:</span> <span class="value">all .4s ease</span><span class="punct">;</span> <span class="punct">}</span>',
+'    <span class="tag">&lt;/style&gt;</span>',
+'  <span class="tag">&lt;/head&gt;</span>',
+'  <span class="tag">&lt;body&gt;</span>',
+'    <span class="tag">&lt;main</span> <span class="attr">class</span>=<span class="value">"lyrics"</span><span class="tag">&gt;</span>'
+];
 
-    const lyrics = [
-      "Bye-bye","Boy, bye, hmm","Hmm","Bye-bye","Boy, bye","It's over, it's over, oh, yeah",
-      "This ain't the first time I've been hostage to these tears",
-      "I can't believe I'm finally movin' through my fears",
-      "At least I know how hard we tried, both you and me",
-      "Didn't we? Didn't we?",
-      "So I grab my stuff","Courtney just pulled up in the driveway","It's time",
-      "Bye-bye","Boy, bye","Bye-bye","It's over, it's over, oh, yeah",
-      "Bye-bye","I'm takin' what's mine, yeah","Bye-bye","It's over, it's over, oh, yeah",
-      "You know? I'm stronger than I think",
-      "Usually, I'd join you on the floor, but this dance ain't for me",
-      "Boy, just turn the music up","Maybe someday, we'll look back with love",
-      "Didn't think you'd lose me","Now it's just too late to choose me",
-      "So I grab my stuff","Courtney just pulled up in the driveway","It's time (It's time)"
-    ];
+const lyrics = [
+'Bye-bye','Boy, bye, hmm','Hmm','Bye-bye','Boy, bye',"It's over, it's over, oh, yeah",
+"This ain't the first time I've been hostage to these tears",
+"I can't believe I'm finally movin' through my fears",
+"At least I know how hard we tried, both you and me",
+"Didn't we? Didn't we?",
+"So I grab my stuff","Courtney just pulled up in the driveway","It's time",
+'Bye-bye','Boy, bye','Bye-bye',"It's over, it's over, oh, yeah",
+'Bye-bye',"I'm takin' what's mine, yeah",'Bye-bye',"It's over, it's over, oh, yeah",
+"You know? I'm stronger than I think",
+"Usually, I'd join you on the floor, but this dance ain't for me",
+"Boy, just turn the music up","Maybe someday, we'll look back with love",
+"Didn't think you'd lose me","Now it's just too late to choose me",
+"So I grab my stuff","Courtney just pulled up in the driveway","It's time (It's time)"
+];
 
-    const code = document.getElementById('code');
-    const replayButton = document.getElementById('replay');
-    const toast = document.getElementById('toast');
-    let runToken = 0;
-    let lineNumber = 1;
+const after = [
+'    <span class="tag">&lt;/main&gt;</span>',
+'    <span class="tag">&lt;script&gt;</span>',
+'      <span class="keyword">const</span> <span class="attr">goodbye</span> <span class="punct">=</span> <span class="string">"let go, let go"</span><span class="punct">;</span>',
+'      <span class="keyword">const</span> <span class="attr">tears</span> <span class="punct">=</span> <span class="string">"a little less every day"</span><span class="punct">;</span>',
+'      <span class="keyword">function</span> <span class="attr">moveOn</span><span class="punct">()</span> <span class="punct">{</span>',
+'        <span class="keyword">return</span> <span class="value">true</span><span class="punct">;</span>',
+'      <span class="punct">}</span>',
+'      <span class="keyword">const</span> <span class="attr">nextChapter</span> <span class="punct">=</span> <span class="string">"still loading..."</span><span class="punct">;</span>',
+'    <span class="tag">&lt;/script&gt;</span>',
+'  <span class="tag">&lt;/body&gt;</span>',
+'<span class="tag">&lt;/html&gt;</span>'
+];
 
-    function makeLine(item, index, total) {
-      const row = document.createElement('div');
-      row.className = 'line pending' + (item.lyric ? ' lyric-line' : '');
-      row.dataset.no = String(index + 1).padStart(2, '0');
-      const src = document.createElement('span');
-      src.className = 'src';
-      if (item.lyric) {
-        src.innerHTML = '<span class="lyric"></span><span class="cursor"></span>';
-        src.querySelector('.lyric').textContent = item.lyric;
-      } else {
-        src.innerHTML = item.code;
-      }
-      row.appendChild(src);
-      return row;
+const code = document.getElementById('code');
+const wrap = document.querySelector('.code-wrap');
+const replayButton = document.getElementById('replay');
+const toast = document.getElementById('toast');
+const allLines = [...before.map(code => ({code})), ...lyrics.map(lyric => ({lyric})), ...after.map(code => ({code}))];
+let runToken = 0;
+
+function delayFor(line, index) {
+  if (!line.lyric) return 125;
+  const words = line.lyric.trim().split(/\s+/).length;
+  const punctuation = (line.lyric.match(/[,.?!]/g) || []).length;
+  return Math.max(430, Math.min(1450, 250 + words * 105 + punctuation * 90));
+}
+
+async function play() {
+  const token = ++runToken;
+  code.innerHTML = '';
+  wrap.scrollTop = 0;
+  for (let i = 0; i < allLines.length; i++) {
+    if (token !== runToken) return;
+    const item = allLines[i];
+    const row = document.createElement('div');
+    row.className = 'line';
+    if (item.lyric) row.classList.add('lyric-line');
+    row.dataset.no = String(i + 1).padStart(2, '0');
+    const src = document.createElement('span');
+    src.className = 'src';
+    if (item.lyric) {
+      const text = document.createElement('span');
+      text.className = 'lyric';
+      text.textContent = item.lyric;
+      src.appendChild(text);
+    } else {
+      src.innerHTML = item.code;
     }
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor';
+    src.appendChild(cursor);
+    row.appendChild(src);
+    code.appendChild(row);
+    row.scrollIntoView({block:'nearest',behavior:'smooth'});
+    await new Promise(resolve => setTimeout(resolve, delayFor(item, i)));
+    if (token !== runToken) return;
+    cursor.remove();
+  }
+}
 
-    function lineDelay(item) {
-      if (!item.lyric) return 145;
-      const words = item.lyric.trim().split(/\s+/).length;
-      return Math.max(360, Math.min(1050, 250 + words * 105));
-    }
+replayButton.addEventListener('click', play);
+play();
 
-    async function play() {
-      const token = ++runToken;
-      code.innerHTML = '';
-      source.forEach((item, i) => code.appendChild(makeLine(item, i)));
-      const rows = [...code.children];
-      for (let i = 0; i < rows.length; i++) {
-        if (token !== runToken) return;
-        const row = rows[i];
-        row.classList.remove('pending');
-        row.classList.add('typing');
-        row.scrollIntoView({block:'nearest',behavior:'smooth'});
-        await new Promise(resolve => setTimeout(resolve, lineDelay(source[i])));
-        if (token !== runToken) return;
-        row.classList.remove('typing');
-        const cursor = row.querySelector('.cursor');
-        if (cursor) cursor.remove();
-      }
-    }
-
-    replayButton.addEventListener('click', play);
-    play();
-
-    document.getElementById('copy').addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText('bye — Lyrics\n\n' + lyrics.join('\n'));
-        toast.textContent = 'Lyrics copied to clipboard';
-      } catch {
-        toast.textContent = 'Clipboard unavailable in this browser';
-      }
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2200);
-    });
-  </script>
+document.getElementById('copy').addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText('bye — Lyrics\n\n' + lyrics.join('\n'));
+    toast.textContent = 'Lyrics copied to clipboard';
+  } catch {
+    toast.textContent = 'Clipboard unavailable in this browser';
+  }
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2200);
+});
+</script>
 </body>
 </html>
