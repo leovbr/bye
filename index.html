@@ -155,28 +155,27 @@ async function play() {
     src.className = 'src';
     const cursor = document.createElement('span');
     cursor.className = 'cursor';
+    src.appendChild(cursor);
+    row.appendChild(src);
+    code.appendChild(row);
+    row.scrollIntoView({block:'nearest',behavior:'smooth'});
 
     if (item.lyric) {
       for (const part of item.lyric) {
         const piece = document.createElement('span');
         piece.className = part.c;
-        src.appendChild(piece);
+        src.insertBefore(piece, cursor);
         for (const char of Array.from(part.t)) {
           if (token !== runToken) return;
           piece.textContent += char;
-          src.appendChild(cursor);
           await new Promise(resolve => setTimeout(resolve, char === ' ' ? 18 : 32));
-          cursor.remove();
         }
       }
     } else {
       src.innerHTML = item.code;
+      src.appendChild(cursor);
     }
 
-    src.appendChild(cursor);
-    row.appendChild(src);
-    code.appendChild(row);
-    row.scrollIntoView({block:'nearest',behavior:'smooth'});
     await new Promise(resolve => setTimeout(resolve, delayFor(item)));
     if (token !== runToken) return;
     cursor.remove();
