@@ -23,7 +23,7 @@ button:hover{border-color:#569cd6;background:#333333}
 .line{display:grid;grid-template-columns:58px minmax(0,1fr);min-height:28px;padding:0 22px 0 0;white-space:pre}
 .line::before{content:attr(data-no);color:#858585;text-align:right;padding-right:20px;user-select:none}
 .line .src{display:block;min-height:28px}
-.tag{color:#569cd6}.owner-tag{color:#00bfff}.attr{color:#9cdcfe}.value{color:#ce9178}.punct{color:#d4d4d4}.lyric{color:#d4d4d4}.string{color:#ce9178}.keyword{color:#c586c0}
+.tag{color:#569cd6}.owner-tag{color:#00bfff}.attr{color:#9cdcfe}.value{color:#ce9178}.punct{color:#d4d4d4}.lyric{color:#d4d4d4}.string{color:#ce9178}.keyword{color:#c586c0}.comment{color:#6a9955}
 .lyric-line{background:transparent;border-left:0}
 .cursor{display:inline-block;width:2px;height:1.15em;background:#aeafad;vertical-align:-2px;margin-left:1px;animation:blink .85s steps(2,start) infinite}
 @keyframes blink{to{visibility:hidden}}
@@ -60,14 +60,14 @@ const lyrics = [
   [{t:'yeah, ',c:'lyric'},{t:'boy bye,',c:'lyric'}],
   [{t:"it's ",c:'lyric'},{t:'<over>',c:'tag'},{t:", it's over, oh yeah",c:'lyric'}],
   [{t:"This ain't the first time I've been hostage to these ",c:'lyric'},{t:"tears",c:'value'}],
-  [{t:"I can't believe I'm finally movin' through my ",c:'lyric'},{t:"fears",c:'attr'}],
-  [{t:"At least I know how hard we ",c:'lyric'},{t:"tried",c:'keyword'},{t:", both ",c:'lyric'},{t:"you and me",c:'string'}],
-  [{t:"Didn't ",c:'lyric'},{t:"we?",c:'keyword'}],
-  [{t:"Didn't we?",c:'lyric'}],
-  [{t:'So I grab my stuff',c:'lyric'}],
-  [{t:'Courtney just pulled up in the driveway',c:'lyric'}],
-  [{t:"It's ",c:'lyric'},{t:"time",c:'attr'}],
-  [{t:'<bye>',c:'tag'},{t:' bye',c:'lyric'}],
+  [{t:"functions ",c:'keyword'},{t:"{ ",c:'punct'},{t:"I can't believe I'm finally movin' through my fears",c:'lyric'},{t:" }",c:'punct'}],
+  [{t:"{ ",c:'punct'},{t:"At least I know how hard we tried, both you and me",c:'lyric'},{t:" }",c:'punct'}],
+  [{t:"// important ",c:'comment'},{t:"Didn't we?",c:'lyric'}],
+  [{t:"if ",c:'keyword'},{t:"(we) ",c:'attr'},{t:"{ ",c:'punct'},{t:"Didn't we?",c:'lyric'},{t:" }",c:'punct'}],
+  [{t:"const ",c:'keyword'},{t:"goodbye ",c:'attr'},{t:"= ",c:'punct'},{t:'"So I grab my stuff"',c:'string'}],
+  [{t:"// ",c:'comment'},{t:'Courtney just pulled up in the driveway',c:'lyric'}],
+  [{t:"return ",c:'keyword'},{t:"It's time",c:'lyric'},{t:";",c:'punct'}],
+  [{t:"<bye>",c:'tag'},{t:' bye',c:'lyric'},{t:" // end",c:'comment'}],
   [{t:'Boy, ',c:'lyric'},{t:'<bye>',c:'tag'}],
   [{t:'<bye>',c:'tag'},{t:' bye',c:'lyric'}],
   [{t:"{ it's ",c:'punct'},{t:'<over>',c:'tag'},{t:" it's over oh yeah }",c:'lyric'}],
@@ -75,8 +75,8 @@ const lyrics = [
   [{t:"I'm takin' what's ",c:'lyric'},{t:"mine",c:'value'},{t:", yeah",c:'lyric'}],
   [{t:'<bye>',c:'tag'},{t:' bye',c:'lyric'}],
   [{t:"{ it's ",c:'punct'},{t:'<over>',c:'tag'},{t:" it's over oh yeah }",c:'lyric'}],
-  [{t:"You know? I'm ",c:'lyric'},{t:"stronger",c:'keyword'},{t:" than I think",c:'lyric'}],
-  [{t:"Usually, I'd join you on the floor, but this dance ain't for me",c:'lyric'}],
+  [{t:"true ",c:'keyword'},{t:"=> ",c:'punct'},{t:"You know? I'm stronger than I think",c:'lyric'}],
+  [{t:"/* ",c:'comment'},{t:"Usually, I'd join you on the floor, but this dance ain't for me",c:'lyric'},{t:" */",c:'comment'}],
   [{t:'Boy, just turn the music up',c:'lyric'}],
   [{t:"Maybe someday, we'll look back with love",c:'lyric'}],
   [{t:"Didn't think you'd lose me",c:'lyric'}],
@@ -115,7 +115,7 @@ const song = document.getElementById('song');
 const playBtn = document.getElementById('playBtn');
 
 function plainText(parts) {
-  return parts.map(part => part.t).join('');
+  return parts.filter(part => part.c === 'lyric' || part.c === 'tag').map(part => part.t).join('');
 }
 
 // Durasi dikalibrasi per baris agar vokal punya ruang lebih panjang.
