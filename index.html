@@ -23,7 +23,7 @@ button:hover{border-color:#569cd6;background:#333333}
 .line{display:grid;grid-template-columns:58px minmax(0,1fr);min-height:28px;padding:0 22px 0 0;white-space:pre}
 .line::before{content:attr(data-no);color:#858585;text-align:right;padding-right:20px;user-select:none}
 .line .src{display:block;min-height:28px}
-.tag{color:#569cd6}.attr{color:#9cdcfe}.value{color:#ce9178}.punct{color:#d4d4d4}.lyric{color:#d4d4d4}.string{color:#ce9178}.keyword{color:#c586c0}
+.tag{color:#569cd6}.owner-tag{color:#00bfff}.attr{color:#9cdcfe}.value{color:#ce9178}.punct{color:#d4d4d4}.lyric{color:#d4d4d4}.string{color:#ce9178}.keyword{color:#c586c0}
 .lyric-line{background:transparent;border-left:0}
 .cursor{display:inline-block;width:2px;height:1.15em;background:#aeafad;vertical-align:-2px;margin-left:1px;animation:blink .85s steps(2,start) infinite}
 @keyframes blink{to{visibility:hidden}}
@@ -119,11 +119,8 @@ const replayButton = document.getElementById('replay');
 const toast = document.getElementById('toast');
 const allLines = [
   ...before.map(code => ({code})),
-  ...lyrics.flatMap(lyric => [
-    {code:'        <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"line"</span><span class="tag">&gt;</span>'},
-    {lyric},
-    {code:'        <span class="tag">&lt;/p&gt;</span>'}
-  ]),
+  {code:'      <span class="owner-tag">&lt;by leovbriansyh&gt;</span>'},
+  ...lyrics.map(lyric => ({lyric})),
   ...after.map(code => ({code}))
 ];
 let runToken = 0;
