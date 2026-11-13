@@ -127,8 +127,21 @@ function waitFrame() {
   return new Promise(resolve => requestAnimationFrame(resolve));
 }
 
-async function waitForSongTime(target, token) {
-  while (token === runToken && song.currentTime < target && !song.ended) {
+let playbackStartedAt = 0;
+let pausedAt = 0;
+let pausedTotal = 0;
+let isPaused = false;
+let hasStarted = false;
+let lyricsFinished = false;
+
+function elapsedPlaybackTime() {
+  if (!playbackStartedAt) return 0;
+  const now = isPaused ? pausedAt : performance.now();
+  return (now - playbackStartedAt - pausedTotal) / 1000;
+}
+
+async function waitForElapsedTime(target, token) {
+  while (token === runToken && (isPaused || elapsedPlaybackTime() < target)) {
     await waitFrame();
   }
 }
@@ -163,15 +176,15 @@ async function play() {
     cursor.remove();
   }
 
-  const duration = song.duration || 49.66;
+  const secondsPerBeat = 60 / 110;
   let beatPosition = 0;
   for (let lyricIndex = 0; lyricIndex < lyrics.length; lyricIndex++) {
     if (token !== runToken) return;
     const item = allLines[before.length + 1 + lyricIndex];
-    const startTime = duration * beatPosition / totalBeats;
+    const startTime = beatPosition * secondsPerBeat;
     beatPosition += phraseBeats[lyricIndex] || 4;
-    const endTime = duration * beatPosition / totalBeats;
-    await waitForSongTime(startTime, token);
+    const endTime = beatPosition * secondsPerBeat;
+    await waitForElapsedTime(startTime, token);
     if (token !== runToken) return;
 
     const {src, cursor} = addRow(before.length + 1 + lyricIndex, item);
@@ -186,7 +199,7 @@ async function play() {
     for (let c = 0; c < chars.length; c++) {
       if (token !== runToken) return;
       const targetTime = startTime + (endTime - startTime) * (c + 1) / chars.length;
-      await waitForSongTime(targetTime, token);
+      await waitForElapsedTime(targetTime, token);
       chars[c].piece.textContent += chars[c].char;
     }
     cursor.remove();
@@ -201,34 +214,45 @@ async function play() {
     cursor.remove();
     await waitFrame();
   }
+  lyricsFinished = true;
+  playBtn.textContent = 'Replay';
 }
 
-playBtn.addEventListener('click', async () => {
-  if (!song.paused) {
-    song.pause();
-    playBtn.textContent = 'Resume';
-    return;
-  }
-  if (song.ended || song.currentTime === 0) {
+playBtn.addEventListener('click', () => {
+  if (!hasStarted || song.ended || lyricsFinished) {
+    runToken++;
     song.currentTime = 0;
+    playbackStartedAt = performance.now();
+    pausedAt = 0;
+    pausedTotal = 0;
+    isPaused = false;
+    hasStarted = true;
+    lyricsFinished = false;
     playBtn.textContent = 'Pause';
     song.play().then(play).catch(() => {
+      hasStarted = false;
       playBtn.textContent = 'Play song';
     });
+    return;
+  }
+
+  if (!isPaused) {
+    isPaused = true;
+    pausedAt = performance.now();
+    song.pause();
+    playBtn.textContent = 'Resume';
   } else {
+    pausedTotal += performance.now() - pausedAt;
+    isPaused = false;
+    pausedAt = 0;
+    if (!song.ended) song.play().catch(() => {});
     playBtn.textContent = 'Pause';
-    song.play().catch(() => {});
   }
 });
 
 song.addEventListener('ended', () => {
-  playBtn.textContent = 'Replay';
-});
-song.addEventListener('pause', () => {
-  if (!song.ended && song.currentTime > 0) playBtn.textContent = 'Resume';
-});
-song.addEventListener('play', () => {
-  playBtn.textContent = 'Pause';
+  // Audio boleh selesai lebih dulu; animasi lirik tetap berjalan.
+  if (!lyricsFinished) playBtn.textContent = isPaused ? 'Resume' : 'Pause';
 });
 </script>
 </body>
