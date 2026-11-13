@@ -24,6 +24,7 @@ button:hover{border-color:#569cd6;background:#333333}
 .line::before{content:attr(data-no);color:#858585;text-align:right;padding-right:20px;user-select:none}
 .line .src{display:block;min-height:28px}
 .tag{color:#569cd6}.owner-tag{color:#00bfff}.attr{color:#9cdcfe}.value{color:#ce9178}.punct{color:#d4d4d4}.lyric{color:#d4d4d4}.string{color:#ce9178}.keyword{color:#c586c0}
+.syntax-0{color:#9cdcfe}.syntax-1{color:#c586c0}.syntax-2{color:#ce9178}.syntax-3{color:#b5cea8}.syntax-4{color:#dcdcaa}
 .lyric-line{background:transparent;border-left:0}
 .cursor{display:inline-block;width:2px;height:1.15em;background:#aeafad;vertical-align:-2px;margin-left:1px;animation:blink .85s steps(2,start) infinite}
 @keyframes blink{to{visibility:hidden}}
@@ -200,11 +201,23 @@ async function play() {
 
     const {src, cursor} = addRow(before.length + 1 + lyricIndex, item);
     const chars = [];
+    let wordColor = 0;
     for (const part of item.lyric) {
-      const piece = document.createElement('span');
-      piece.className = part.c;
-      src.insertBefore(piece, cursor);
-      for (const char of Array.from(part.t)) chars.push({piece, char});
+      if (part.c !== 'lyric') {
+        const piece = document.createElement('span');
+        piece.className = part.c;
+        src.insertBefore(piece, cursor);
+        for (const char of Array.from(part.t)) chars.push({piece, char});
+        continue;
+      }
+      const tokens = part.t.match(/[A-Za-z0-9']+|[^A-Za-z0-9']+/g) || [];
+      for (const tokenText of tokens) {
+        const piece = document.createElement('span');
+        const isWord = /^[A-Za-z0-9']+$/.test(tokenText);
+        piece.className = isWord ? `syntax-${wordColor++ % 5}` : 'lyric';
+        src.insertBefore(piece, cursor);
+        for (const char of Array.from(tokenText)) chars.push({piece, char});
+      }
     }
 
     for (let c = 0; c < chars.length; c++) {
